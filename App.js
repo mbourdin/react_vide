@@ -5,5 +5,7 @@ class App extends React.Component {
         this.messages=["message1","message2"];
     }
 
-
+    render() {
+        return (<Messages messages={this.messages}></Messages>);
+    }
 }
