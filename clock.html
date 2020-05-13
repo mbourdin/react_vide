@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <style>
+        .heading{
+            color: purple;
+        }
+    </style>
+</head>
+
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    class Clock extends React.Component
+    {
+
+        constructor(props) {
+            super(props);
+            this.clock= new Date();
+            console.log("constructeur");
+        }
+        render()
+        {   return(
+            <div>
+                {
+                    this.clock.getHours()+":"+this.clock.getMinutes()+"."+this.clock.getSeconds()
+                }
+            </div>
+        );
+        }
+    }
+
+    const render=()=>{
+    ReactDOM.render(
+        <Clock />,
+        document.getElementById('root')
+    );
+    console.log("render");
+    };
+    let interval=setInterval( render,1000);
+</script>
+</body>
+</html>
