@@ -1,16 +1,19 @@
-class App extends React.Component {
+console.log("Messages Loaded");
+class Messages extends React.Component {
     constructor(props) {
         super(props)
     }
 
     render() {
-        let messages=props.messages.map((message)=>
-            <Message message={message}></Message>
-        );
+
         return (
-        <div>
-            {messages}
-        </div>
+            <div>
+                this.props.messages.map(
+                (message,index)=>
+                <Message message={message} key={index}></Message>
+                )
+            </div>
+
     );
     }
 }
