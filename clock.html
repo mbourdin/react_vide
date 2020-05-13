@@ -24,28 +24,26 @@
 
         constructor(props) {
             super(props);
-            this.clock= new Date();
-            console.log("constructeur");
+            this.state={
+                time: new Date()
+            }
+            let interval=setInterval( ()=>{this.setState({time : new Date()})},1000);
         }
         render()
         {   return(
             <div>
                 {
-                    this.clock.getHours()+":"+this.clock.getMinutes()+"."+this.clock.getSeconds()
+                    this.state.time.toLocaleTimeString()
                 }
             </div>
         );
         }
     }
-
-    const render=()=>{
     ReactDOM.render(
         <Clock />,
         document.getElementById('root')
     );
-    console.log("render");
-    };
-    let interval=setInterval( render,1000);
+
 </script>
 </body>
 </html>

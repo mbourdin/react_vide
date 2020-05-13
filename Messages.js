@@ -8,10 +8,12 @@ class Messages extends React.Component {
 
         return (
             <div>
+                {
                 this.props.messages.map(
                 (message,index)=>
                 <Message message={message} key={index}></Message>
                 )
+                }
             </div>
 
     );
