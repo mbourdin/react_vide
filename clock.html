@@ -19,6 +19,33 @@
 <body>
 <div id="root"></div>
 <script type="text/babel">
+
+    class App extends React.Component
+    {
+        constructor(props) {
+            super(props);
+            this.state={
+            displayClock : true
+            }
+
+            this.timeout=setTimeout(()=>{
+                this.setState({displayClock: false})
+            },5000);
+        }
+        componentWillUnmount(){
+            clearTimeout(this.timeout);
+        }
+        render()
+        {
+            return (
+                <div>
+                    {
+                        (this.state.displayClock && <Clock />)
+                    }
+                </div>
+            )
+        }
+    }
     class Clock extends React.Component
     {
 
@@ -27,7 +54,7 @@
             this.state={
                 time: new Date()
             }
-            setInterval( ()=>{this.setState({time : new Date()})},1000);
+            this.interval=setInterval( ()=>{this.setState({time : new Date()})},1000);
         }
         render()
         {   return(
@@ -38,9 +65,13 @@
             </div>
         );
         }
+        componentWillUnmount()
+        {
+            clearInterval(this.interval);
+        }
     }
     ReactDOM.render(
-        <Clock />,
+        <App />,
         document.getElementById('root')
     );
 
