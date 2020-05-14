@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <style>
+        .heading {
+            color: purple;
+        }
+    </style>
+</head>
+
+<body>
+<div id="root">
+    <div id="counter1"></div>
+    <div id="counter2"></div>
+</div>
+
+<script type="text/babel">
+
+    class Counter extends React.Component {
+
+        constructor(props) {
+            super(props);
+            this.state = {
+                count: 0
+            }
+            this.interval=null;
+        }
+
+        start = () => {
+            this.interval = setInterval(
+                () => {
+                    this.setState({count: this.state.count + this.props.step});
+                }, 1000);
+        };
+
+        stop = () => {
+            clearInterval(this.interval);
+        };
+        reset = () => {
+            this.setState({count: 0});
+        };
+
+        render() {
+            return (
+
+                <div>
+                    <div>
+                        {
+                            this.state.count.toString()
+                        }
+                    </div>
+                    <button onClick={this.start}> start</button>
+                    <button onClick={this.stop}>stop</button>
+                    <button onClick={this.reset}>reset</button>
+                </div>
+            );
+        }
+
+        componentWillUnmount() {
+            clearInterval(this.interval);
+        }
+    }
+
+    ReactDOM
+        .render(
+            <Counter step={1}/>,
+            document
+                .getElementById(
+                    'counter1'
+                )
+        )
+    ;
+    ReactDOM
+        .render(
+            <Counter step={2}/>,
+            document
+                .getElementById(
+                    'counter2'
+                )
+        )
+    ;
+
+</script>
+</body>
+</html>
