@@ -20,7 +20,7 @@
 
         handleChange = (event) =>{
             //this.setState({valeur:event.target.value});
-            this.props.updateParent(event.target.value,this.props.id);
+            this.props.updateParent(event.target.value,this.props.radix);
 
         }
 
@@ -46,21 +46,16 @@
             }
         }
 
-        updateFromChild = (valeur,id) => {
-            if(id===10)
-            {   this.setState({valeurDecimale:valeur,valeurBinaire:Number.parseInt(valeur).toString(2)});
-            }
-            else
-            {
-                this.setState({valeurDecimale:Number.parseInt(valeur,2).toString(),valeurBinaire:valeur});
-            }
+        updateFromChild = (valeur,radix) => {
+            let numberVal=Number.parseInt(valeur,radix);
+            this.setState({valeurDecimale:numberVal.toString(),valeurBinaire:numberVal.toString(2)});
         }
 
         render(){
             return(
                 <div>
-                    <BaseNumberInput valeur={this.state.valeurDecimale} id={10} updateParent={this.updateFromChild}/>
-                    <BaseNumberInput valeur={this.state.valeurBinaire} id={2} updateParent={this.updateFromChild}/>
+                    <BaseNumberInput valeur={this.state.valeurDecimale} radix={10} updateParent={this.updateFromChild}/>
+                    <BaseNumberInput valeur={this.state.valeurBinaire} radix={2} updateParent={this.updateFromChild}/>
                 </div>
             )
         }
