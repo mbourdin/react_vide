@@ -28,7 +28,10 @@
 
 
             return(
-                <input type="text" value={this.props.valeur} onChange={this.handleChange}/>
+                <div>
+                <input type="text"  onChange={this.handleChange}/>
+                <span> {this.props.valeur}</span>
+                </div>
             )
         }
     }
