@@ -35,14 +35,19 @@
         }
 
         start = () => {
-            this.interval = setInterval(
-                () => {
-                    this.setState({count: this.state.count + this.props.step});
-                }, 1000);
+            if (this.interval===null)
+            {
+                this.interval = setInterval(
+                    () => {
+                        this.setState({count: this.state.count + this.props.step});
+                    }, 1000);
+            }
+
         };
 
         stop = () => {
             clearInterval(this.interval);
+            this.interval=null;
         };
         reset = () => {
             this.setState({count: 0});
