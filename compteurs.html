@@ -10,8 +10,9 @@
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 
     <style>
-        .heading {
-            color: purple;
+        button{
+            border-style: solid;
+            border-color: black;
         }
     </style>
 </head>
@@ -29,7 +30,8 @@
         constructor(props) {
             super(props);
             this.state = {
-                count: 0
+                count: 0,
+                started : false
             }
             this.interval=null;
         }
@@ -42,12 +44,14 @@
                         this.setState({count: this.state.count + this.props.step});
                     }, 1000);
             }
+            this.setState({started : true});
 
         };
 
         stop = () => {
             clearInterval(this.interval);
             this.interval=null;
+            this.setState({started: false})
         };
         reset = () => {
             this.setState({count: 0});
@@ -62,8 +66,8 @@
                             this.state.count.toString()
                         }
                     </div>
-                    <button onClick={this.start}> start</button>
-                    <button onClick={this.stop}>stop</button>
+                    <button disabled={this.state.started} onClick={this.start}> start</button>
+                    <button disabled={!this.state.started} onClick={this.stop}>stop</button>
                     <button onClick={this.reset}>reset</button>
                 </div>
             );
@@ -71,6 +75,7 @@
 
         componentWillUnmount() {
             clearInterval(this.interval);
+            this.interval=null;
         }
     }
 
