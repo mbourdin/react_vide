@@ -1,0 +1,76 @@
+<!-- structure
+
+        Form
+            Wrapper
+                h1
+                email
+            Wrapper
+                q1
+            wrapper
+                q2
+            wrapper
+                q3
+        /form
+
+        resultat
+-->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+</head>
+<body>
+<div id="qcm"></div>
+<!-- compilation JSX => JS -->
+<script type="text/babel" src="Select.js"></script>
+<script type="text/babel" src="Input.js"></script>
+<script type="text/babel" src="Radio.js"></script>
+<script type="text/babel" src="Form.js"></script>
+<script type="text/babel" src="Wrapper.js"></script>
+<script type="text/babel">
+    const questions = {
+        'symfony' : {
+            title : "Symfony design pattern",
+            choices : ['MMV', 'MVC', 'MMVV'],
+            response : 1,
+            type : "select",
+            name : "symfony",
+            feedback : 'Symfony est basé sur le pattern MVC'
+        },
+        'react' : {
+            title : "React est-il un framework ?",
+            choices : ['yes', 'no'],
+            response : 1,
+            type : "radio",
+            name : "react",
+            feedback : "React est une librairie"
+        },
+        'jsx' : {
+            title : "JSX c'est quoi ?",
+            choices : ['JSX est un langage compilé', 'JSX est un sur-ensemble développé par Facebook'],
+            response : 1,
+            type: "radio" ,
+            name : "jsx",
+            feedback : 'JSX est un sur ensemble à JS'
+        }
+    }
+
+
+
+
+    ReactDOM.render(
+        <Form questions={questions}>
+            <Wrapper>
+                <h1>TEST</h1>
+            </Wrapper>
+        </Form>
+        ,        document.getElementById("qcm")
+    );
+</script>
+</body>
+</html>
