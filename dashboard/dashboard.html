@@ -1,0 +1,104 @@
+<!-- structure
+APP:
+    Dashboard<User>
+-->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+</head>
+<body>
+<div id="dashboard"></div>
+<!-- compilation JSX => JS -->
+
+
+<script type="text/babel">
+    const users = [
+        {id: 1, name: "Alice"},
+        {id: 2, name: "Alan"},
+        {id: 3, name: "Phil"},
+        {id: 4, name: "Naoudi"},
+        {id: 5, name: "Fenley"},
+    ];
+
+
+    class Dashboard extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                users: this.props.users
+            }
+            this.form_user = "";
+        }
+
+        handleChange = (event) => {
+            //console.log(event.target.value)
+            this.form_user = event.target.value;
+        }
+        handleSubmit = (event) => {
+            event.preventDefault();
+            if (this.form_user === "") {
+                this.setState({error: "champ vide!"});
+                return;
+            }
+
+            if (this.state.users.find(element=>this.form_user===element.name)===undefined) {
+                let id=0;
+                for(let user of this.state.users)
+                {
+                    id=Math.max(id,user.id);
+                }
+                id++;
+                this.state.users.push({name:this.form_user,id:id});
+                this.setState({users: this.state.users});
+            }
+        }
+
+        render() {
+            return (
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            <input type="text" name="user" onChange={this.handleChange}/>
+                        </label>
+                    </form>
+                    <User users={this.state.users}/>
+                </div>
+
+            );
+        }
+    }
+
+    class User extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            return (
+                <div>
+                    {this.props.users.map(
+                        (user, index) =>
+                            <div key={index}>
+                                <span>{user.id}</span><span>{user.name}</span>
+                            </div>
+                    )
+                    }
+                </div>
+            )
+        }
+    }
+
+
+    ReactDOM.render(
+        <Dashboard users={users}/>,
+        document.getElementById("dashboard")
+    );
+</script>
+</body>
+</html>
