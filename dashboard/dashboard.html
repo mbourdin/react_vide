@@ -30,45 +30,16 @@ APP:
     class Dashboard extends React.Component {
         constructor(props) {
             super(props);
-            this.state = {
-                users: this.props.users
-            }
-            this.form_user = "";
+
         }
 
-        handleChange = (event) => {
-            //console.log(event.target.value)
-            this.form_user = event.target.value;
-        }
-        handleSubmit = (event) => {
-            event.preventDefault();
-            if (this.form_user === "") {
-                this.setState({error: "champ vide!"});
-                return;
-            }
 
-            if (this.state.users.find(element=>this.form_user===element.name)===undefined) {
-                let id=0;
-                for(let user of this.state.users)
-                {
-                    id=Math.max(id,user.id);
-                }
-                id++;
-                this.state.users.push({name:this.form_user,id:id});
-                this.setState({users: this.state.users});
-            }
-        }
 
         render() {
             return (
-                <div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label>
-                            <input type="text" name="user" onChange={this.handleChange}/>
-                        </label>
-                    </form>
-                    <User users={this.state.users}/>
-                </div>
+
+                    this.props.children
+
 
             );
         }
@@ -78,14 +49,23 @@ APP:
         constructor(props) {
             super(props);
         }
-
+        hoverStyle=(event)=>{
+            //console.log(event.target.style);
+            event.currentTarget.style.backgroundColor= "blue";
+            event.currentTarget.style.color="red";
+            this.setState({});
+        }
+        defaultStyle=(event)=>{
+            event.currentTarget.style.backgroundColor=null;
+            event.currentTarget.style.color=null;
+        }
         render() {
             return (
-                <div>
+                <div style={{display : "flex",flexDirection : "column"}}>
                     {this.props.users.map(
                         (user, index) =>
-                            <div key={index}>
-                                <span>{user.id}</span><span>{user.name}</span>
+                            <div key={index} style={{order : user.order}} onMouseEnter={this.hoverStyle} onMouseLeave={this.defaultStyle}>
+                                <span style={{margin: "20px"}}>{user.id}</span><span >{user.name}</span>
                             </div>
                     )
                     }
@@ -94,9 +74,76 @@ APP:
         }
     }
 
+    class App extends React.Component{
+        constructor(props) {
+            super(props);
+
+            this.state = {
+                users: this.props.users
+            }
+            let i=0;
+            for(let user of this.state.users)
+            {
+                user.order=i;
+                i++;
+            }
+            this.form_user = "";
+        }
+        render(){
+            return(
+                <Dashboard>
+                    <form onSubmit={this.handleSubmit}>
+                    <input type="text" name="user" onChange={this.handleChange}/>
+                        <button onClick={this.handleSubmit}>+</button>
+                        <button onClick={this.shuffle}>Melanger</button>
+                    </form>
+
+                    {this.state.error&& <div>Existe deja</div>}
+                    <User users={this.props.users}/>
+                </Dashboard>
+            )
+        }
+        shuffle=(event)=>{
+            console.log("shuffle");
+            event.preventDefault();
+            for(let user of this.state.users)
+            {
+                user.order=Math.floor(Math.random()*this.state.users.length*100);
+
+            }
+            this.setState({});
+        }
+        handleChange = (event) => {
+           this.form_user = event.target.value;
+           this.setState({error:false});
+        }
+        handleSubmit = (event) => {
+            event.preventDefault();
+            if (this.form_user === "") {
+                this.setState({error: "champ vide!"});
+                return;
+            }
+            let user=this.form_user.toUpperCase()
+            if (this.state.users.find(element=>user===element.name.toUpperCase())===undefined) {
+                let id=0;
+                for(let user of this.state.users)
+                {
+                    id=Math.max(id,user.id);
+                }
+                id++;
+                this.state.users.push({name:this.form_user,id:id,order:id});
+                this.setState({users: this.state.users
+                });
+            }
+            else
+            {
+                this.setState({error:true})
+            }
+        }
+    }
 
     ReactDOM.render(
-        <Dashboard users={users}/>,
+        <App users={users}/>,
         document.getElementById("dashboard")
     );
 </script>
