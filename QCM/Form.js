@@ -8,8 +8,8 @@ class Form extends React.Component{
             q.score=0;
             this.questions.push(q);
         }
-        this.state={submitted:false}
-        this.score=0;
+        this.state={submitted:false,score:0}
+
 
     }
     recieveScore=(score,index)=>{
@@ -19,8 +19,7 @@ class Form extends React.Component{
         {
             tempScore+=question.score;
         }
-        console.log(tempScore)
-        this.score=tempScore;
+        this.setState({score:tempScore});
     }
 
     typeSwitch(question,index)

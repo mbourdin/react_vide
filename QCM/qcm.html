@@ -16,6 +16,8 @@
 <script type="text/babel" src="Radio.js"></script>
 <script type="text/babel" src="Form.js"></script>
 <script type="text/babel" src="Wrapper.js"></script>
+<script type="text/babel" src="App.js"></script>
+
 <script type="text/babel">
     const questions = {
         'symfony' : {
@@ -48,11 +50,11 @@
 
 
     ReactDOM.render(
-        <Form questions={questions}>
+
             <Wrapper>
-                <h1>TEST</h1>
+                <App questions={questions}/>
             </Wrapper>
-        </Form>
+
         ,        document.getElementById("qcm")
     );
 </script>
