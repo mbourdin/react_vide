@@ -1,10 +1,9 @@
 class Select extends React.Component{
     constructor(props) {
         super(props);
-        this.state={submitted:true};
-        console.log(this.props)
+        console.log(this.props);
     }
-    onChange=(event)=>{
+    handleChange=(event)=>{
 
         //console.log(event.currentTarget.value+" "+this.props.question.response)
         let score=0;
@@ -21,7 +20,7 @@ class Select extends React.Component{
             <h2>{this.props.question.title}</h2>
             <select
                 name={this.props.question.name}
-                onChange={this.onChange}>
+                onChange={this.handleChange}>
                 {
                     this.props.question.choices.map((choice,index)=>{
                         return (<option key={index} value={index}>{choice}</option>)
@@ -31,7 +30,7 @@ class Select extends React.Component{
         </select>
             <div>
                 {
-                    this.state.submitted && <div>{this.props.question.feedback}</div>
+                    this.props.submitted && <div>{this.props.question.feedback}</div>
                 }
             </div>
         </div>;

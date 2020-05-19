@@ -5,8 +5,8 @@ class Input extends React.Component{
 
     render() {
         let jsx=<div>
-            <h2>{this.props.question.title}</h2>
-            <input type="text"/>
+            <h2>{this.props.title}</h2>
+            <input type={this.props.type} />
         </div>
         return (
            jsx

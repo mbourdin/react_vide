@@ -8,6 +8,8 @@ class Form extends React.Component{
             q.score=0;
             this.questions.push(q);
         }
+        this.state={submitted:false}
+        this.score=0;
 
     }
     recieveScore=(score,index)=>{
@@ -17,31 +19,70 @@ class Form extends React.Component{
         {
             tempScore+=question.score;
         }
-        console.log(tempScore);
+        console.log(tempScore)
+        this.score=tempScore;
+    }
+
+    typeSwitch(question,index)
+    {
+        switch(question.type)
+        {
+            case "select" :
+                return (
+                    <Wrapper key={index}>
+                    <Select
+                        question={question}
+                        key={index}
+                        questionId={index}
+                        sendScore={this.recieveScore}
+                        submitted={this.state.submitted}
+                    />
+                    </Wrapper>
+                );
+            //break;
+            case "radio" :
+                return (
+                    <Wrapper key={index}>
+                    <Radio
+                        question={question}
+                        key={index}
+                        questionId={index}
+                        sendScore={this.recieveScore}
+                        submitted={this.state.submitted}
+                    />
+                    </Wrapper>
+                )
+
+                //break;
+            default:
+                return (
+                    <div></div>
+                );
+                //break;
+        }
+    }
+    handleSubmit=(event)=>
+    {
+        event.preventDefault();
+        this.setState({submitted:true})
     }
     render(){
 
 
         return (
             <form>
+                <h1>QCM</h1>
+                <Input type="email" title="Enter votre Email"></Input>
                 {this.questions.map(
                 (question, index) =>
-                    (question.type==="select") ?
-                    <Select
-                        question={question}
-                        key={index}
-                        questionId={index}
-                        sendScore={this.recieveScore}
-                    />
-                        :
-                    <Radio
-                        question={question}
-                        key={index}
-                        questionId={index}
-                        sendScore={this.recieveScore}
-                    />
-
+                {
+                    return(this.typeSwitch(question,index));
+                }
             )}
+                <button onClick={this.handleSubmit}>envoyer</button>
+                {
+                    this.state.submitted && <div>votre score est {this.score}/{this.questions.length}</div>
+                }
             </form>
         )
     }
