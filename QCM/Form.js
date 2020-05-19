@@ -8,7 +8,8 @@ class Form extends React.Component{
             q.score=0;
             this.questions.push(q);
         }
-        this.state={submitted:false,score:0}
+        this.state={submitted:false,
+            score:0};
 
 
     }
@@ -65,22 +66,30 @@ class Form extends React.Component{
         event.preventDefault();
         this.setState({submitted:true})
     }
+    reset=(event)=>{
+        event.preventDefault();
+        console.log("reset");
+        this.setState({submitted:false});
+    }
     render(){
 
 
         return (
             <form>
                 <h1>QCM</h1>
-                <Input type="email" title="Enter votre Email"></Input>
+                <Input type="email" title="Enter votre Email" required></Input>
                 {this.questions.map(
                 (question, index) =>
                 {
                     return(this.typeSwitch(question,index));
                 }
             )}
-                <button onClick={this.handleSubmit}>envoyer</button>
                 {
-                    this.state.submitted && <div>votre score est {this.score}/{this.questions.length}</div>
+                    (!this.state.submitted) &&<button onClick={this.handleSubmit} >envoyer</button>
+                }
+                {
+                    this.state.submitted && <div>votre score est {this.state.score}/{this.questions.length} <button onClick={this.reset}>recommencer</button></div>
+
                 }
             </form>
         )

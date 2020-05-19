@@ -24,6 +24,7 @@ class Radio extends React.Component {
                             <input value={index}
                                    type="radio"
                                    value={index}
+                                   disabled={this.props.submitted}
                                    name={this.props.question.name}
                                     onChange={this.handleChange}
                             />

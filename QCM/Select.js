@@ -20,13 +20,16 @@ class Select extends React.Component{
             <h2>{this.props.question.title}</h2>
             <select
                 name={this.props.question.name}
-                onChange={this.handleChange}>
+                onChange={this.handleChange}
+                disabled={this.props.submitted}
+                >
                 {
                     this.props.question.choices.map((choice,index)=>{
                         return (<option key={index} value={index}>{choice}</option>)
                         }
                     )
                 }
+
         </select>
             <div>
                 {
