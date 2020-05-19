@@ -1,9 +1,14 @@
 class Pagination extends React.Component{
     /*
      Necessite les props suivantes:
+
      length : le nombre maximal de pages
      setPage(pageNumber) : la fonction qui renvoie la pagination au parent
      currentPage : la page actuellement affichee
+
+     Optionnel :
+
+     min : le numero minimum de page (0 par defaut)
      */
     constructor(props) {
         super(props);
