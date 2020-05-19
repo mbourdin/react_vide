@@ -83,7 +83,7 @@ class Form extends React.Component{
     reset=(event)=>{
         event.preventDefault();
         console.log("reset");
-        this.setState({submitted:false});
+        this.setState({submitted:false,currentPage:0});
     }
     setEmail=(event)=>{
         this.email=event.currentTarget.value;
