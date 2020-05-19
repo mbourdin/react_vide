@@ -1,13 +1,13 @@
 class App extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props.questions)
+
     }
 
     render() {
         return (
-            <Wrapper>
-                <Form questions={this.props.questions}>
+            <Wrapper className="app" show={true}>
+                <Form questions={this.props.questions} className="form">
                 </Form>
             </Wrapper>
         );

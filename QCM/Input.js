@@ -7,7 +7,7 @@ class Input extends React.Component{
     }
     render() {
         let jsx=<div><div>
-            <h2>{this.props.title}</h2>
+            <label>{this.props.label}</label>
             <input type={this.props.type} required={this.props.required} onChange={this.toParent}/>
         </div>
         {

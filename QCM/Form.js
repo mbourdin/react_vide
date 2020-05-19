@@ -11,10 +11,20 @@ class Form extends React.Component{
         this.state={submitted:false,
             score:0,
             emailIsValid:false,
+            currentPage:0
         };
 
 
     }
+    previousPage=()=>{
+        //console.log(this.state.currentPage);
+        this.setState({currentPage: Math.max(this.state.currentPage-1,0)});
+    };
+    nextPage=()=>{
+        //console.log(this.state.currentPage);
+        this.setState({currentPage: Math.min(this.state.currentPage+1,this.questions.length)});
+    };
+
     recieveScore=(score,index)=>{
         this.questions[index].score=score;
         let tempScore=0;
@@ -31,7 +41,7 @@ class Form extends React.Component{
         {
             case "select" :
                 return (
-                    <Wrapper key={index}>
+                    <Wrapper key={index} show={index===this.state.currentPage-1}>
                     <Select
                         question={question}
                         key={index}
@@ -44,7 +54,7 @@ class Form extends React.Component{
             //break;
             case "radio" :
                 return (
-                    <Wrapper key={index}>
+                    <Wrapper key={index} show={index===this.state.currentPage-1}>
                     <Radio
                         question={question}
                         key={index}
@@ -91,15 +101,18 @@ class Form extends React.Component{
 
 
         return (
-            <form>
+            <div>
+            <form className={this}>
                 <h1>QCM</h1>
+                <Wrapper show={this.state.currentPage===0}>
                 <Input type="email"
-                       title="Enter votre Email"
                        required={true}
                        toParent={this.setEmail}
                        isValid={this.state.emailIsValid}
                        showAlert={this.state.showEmailAlert}
+                       label="Entrez votre Email"
                 />
+                </Wrapper>
                 {this.questions.map(
                 (question, index) =>
                 {
@@ -114,6 +127,10 @@ class Form extends React.Component{
 
                 }
             </form>
+                <p>page {this.state.currentPage+1}/{this.questions.length+1}</p>
+        <button onClick={this.previousPage} disabled={this.state.currentPage===0}>Page -</button>
+        <button onClick={this.nextPage} disabled={this.state.currentPage===this.questions.length}>Page +</button>
+            </div>
         )
     }
 }
