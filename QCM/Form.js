@@ -9,7 +9,9 @@ class Form extends React.Component{
             this.questions.push(q);
         }
         this.state={submitted:false,
-            score:0};
+            score:0,
+            emailIsValid:false,
+        };
 
 
     }
@@ -64,12 +66,26 @@ class Form extends React.Component{
     handleSubmit=(event)=>
     {
         event.preventDefault();
-        this.setState({submitted:true})
+        if(this.state.emailIsValid){
+            this.setState({submitted:true})
+        }
     }
     reset=(event)=>{
         event.preventDefault();
         console.log("reset");
         this.setState({submitted:false});
+    }
+    setEmail=(event)=>{
+        this.email=event.currentTarget.value;
+        this.setState({
+            emailIsValid :this.validateEmail(this.email),
+            showEmailAlert:false,
+        });
+        console.log(this.state.emailIsValid);
+    }
+    validateEmail(email) {
+        let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regex.test(String(email).toLowerCase());
     }
     render(){
 
@@ -77,7 +93,13 @@ class Form extends React.Component{
         return (
             <form>
                 <h1>QCM</h1>
-                <Input type="email" title="Enter votre Email" required></Input>
+                <Input type="email"
+                       title="Enter votre Email"
+                       required={true}
+                       toParent={this.setEmail}
+                       isValid={this.state.emailIsValid}
+                       showAlert={this.state.showEmailAlert}
+                />
                 {this.questions.map(
                 (question, index) =>
                 {
