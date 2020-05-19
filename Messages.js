@@ -1,4 +1,4 @@
-console.log("Messages Loaded");
+//console.log("Messages Loaded");
 class Messages extends React.Component {
     constructor(props) {
         super(props)

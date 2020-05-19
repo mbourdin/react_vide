@@ -46,7 +46,7 @@ APP:
         }
 
         hoverStyle = (event) => {
-            //console.log(event.target.style);
+            ////console.log(event.target.style);
             event.currentTarget.style.backgroundColor = "blue";
             event.currentTarget.style.color = "red";
         }
@@ -102,7 +102,7 @@ APP:
         }
 
         shuffle = (event) => {
-            console.log("shuffle");
+            //console.log("shuffle");
             event.preventDefault();
             for (let user of this.state.users) {
                 user.order = Math.floor(Math.random() * this.state.users.length * 100);

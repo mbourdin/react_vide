@@ -1,17 +1,17 @@
 class Select extends React.Component{
     constructor(props) {
         super(props);
-        console.log(this.props);
+        //console.log(this.props);
     }
     handleChange=(event)=>{
 
-        //console.log(event.currentTarget.value+" "+this.props.question.response)
+        ////console.log(event.currentTarget.value+" "+this.props.question.response)
         let score=0;
         if(event.target.value==this.props.question.response)
         {
             score=1
         }
-        //console.log(score+","+this.props.questionId)
+        ////console.log(score+","+this.props.questionId)
         this.props.sendScore(score,this.props.questionId);
     }
 

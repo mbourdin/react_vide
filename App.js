@@ -1,4 +1,4 @@
-console.log("App loaded");
+//console.log("App loaded");
 class App extends React.Component {
     constructor(props) {
         super(props);

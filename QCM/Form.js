@@ -9,32 +9,31 @@ class Form extends React.Component{
             this.questions.push(q);
         }
         this.state={submitted:false,
-            score:0,
             emailIsValid:false,
-            currentPage:0
+            currentPage:0,
+            showEmailAlert: false
         };
 
 
     }
-    previousPage=()=>{
-        //console.log(this.state.currentPage);
-        this.setState({currentPage: Math.max(this.state.currentPage-1,0)});
-    };
-    nextPage=()=>{
-        //console.log(this.state.currentPage);
-        this.setState({currentPage: Math.min(this.state.currentPage+1,this.questions.length)});
+    setPage=(pageNumber)=>{
+        //console.log("setPage in Form");
+        this.setState({currentPage:pageNumber});
     };
 
     recieveScore=(score,index)=>{
         this.questions[index].score=score;
+
+
+    }
+    getScore(){
         let tempScore=0;
         for(let question of this.questions)
         {
             tempScore+=question.score;
         }
-        this.setState({score:tempScore});
+        return tempScore;
     }
-
     typeSwitch(question,index)
     {
         switch(question.type)
@@ -79,10 +78,14 @@ class Form extends React.Component{
         if(this.state.emailIsValid){
             this.setState({submitted:true})
         }
+        else
+        {
+            this.setState({showEmailAlert:true})
+        }
     }
     reset=(event)=>{
         event.preventDefault();
-        console.log("reset");
+        //console.log("reset");
         this.setState({submitted:false,currentPage:0});
     }
     setEmail=(event)=>{
@@ -91,7 +94,7 @@ class Form extends React.Component{
             emailIsValid :this.validateEmail(this.email),
             showEmailAlert:false,
         });
-        console.log(this.state.emailIsValid);
+        //console.log(this.state.emailIsValid);
     }
     validateEmail(email) {
         let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -123,13 +126,11 @@ class Form extends React.Component{
                     (!this.state.submitted) &&<button onClick={this.handleSubmit} >envoyer</button>
                 }
                 {
-                    this.state.submitted && <div>votre score est {this.state.score}/{this.questions.length} <button onClick={this.reset}>recommencer</button></div>
+                    this.state.submitted && <div>votre score est {this.getScore()}/{this.questions.length} <button onClick={this.reset}>recommencer</button></div>
 
                 }
             </form>
-                <p>page {this.state.currentPage+1}/{this.questions.length+1}</p>
-        <button onClick={this.previousPage} disabled={this.state.currentPage===0}>Page -</button>
-        <button onClick={this.nextPage} disabled={this.state.currentPage===this.questions.length}>Page +</button>
+                <Pagination setPage={this.setPage} currentPage={this.state.currentPage} length={this.questions.length}/>
             </div>
         )
     }
